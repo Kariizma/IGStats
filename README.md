@@ -1,2 +1,2 @@
-# IGStats
- Group Project for Android CLass
+# myList++
+ Group Project for CSCI-380
