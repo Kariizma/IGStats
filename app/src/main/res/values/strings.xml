@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">myList</string>
+    <string name="title_activity_email_password">EmailPasswordActivity</string>
+</resources>

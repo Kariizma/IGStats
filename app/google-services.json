@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "49132933394",
+    "firebase_url": "https://mylist-csci380.firebaseio.com",
+    "project_id": "mylist-csci380",
+    "storage_bucket": "mylist-csci380.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49132933394:android:0e8ca0e21a57aed39ee3cb",
+        "android_client_info": {
+          "package_name": "com.f4csci380.mylist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49132933394-ud19h0l2dkli8otu9g3okvq5fsp655ft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrlhTK9jo3HcEodbWQt5lgtm_wDJeZlRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49132933394-ud19h0l2dkli8otu9g3okvq5fsp655ft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
