@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity
     EditText emailAddress;
     EditText password;
     Button signIn;
+    Button registerBtn;
     final static String TAG = "Login Activity";
 
 
@@ -41,6 +42,15 @@ public class LoginActivity extends AppCompatActivity
         emailAddress = findViewById(R.id.emailEditText);
         password = findViewById(R.id.passwordEditText);
         signIn = findViewById(R.id.signInBtn);
+        registerBtn = findViewById(R.id.registerBtn);
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
