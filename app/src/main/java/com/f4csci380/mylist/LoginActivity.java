@@ -3,6 +3,7 @@ package com.f4csci380.mylist;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,11 +22,11 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class LoginActivity extends AppCompatActivity
 {
-
     private FirebaseAuth mAuth;
     EditText emailAddress;
     EditText password;
     Button signIn;
+    final static String TAG = "Login Activity";
 
 
     @Override
@@ -63,36 +64,38 @@ public class LoginActivity extends AppCompatActivity
                 }
                 else if(!(e.isEmpty() && p.isEmpty()))
                 {
-                    mAuth.createUserWithEmailAndPassword(e,p).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    mAuth.signInWithEmailAndPassword(e,p).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task)
                         {
-                           if(!task.isSuccessful())
-                           {
-                               try
-                               {
-                                   throw task.getException();
-                               }
-                               catch (FirebaseAuthWeakPasswordException invalidPassword)
-                               {
-                                   Toast.makeText(LoginActivity.this,invalidPassword.getReason(),Toast.LENGTH_LONG);
-                                   Log.d("Register Activity", "Invalid Password");
-                               }
-                               catch (FirebaseAuthInvalidCredentialsException invalidEmail)
-                               {
-                                   Toast.makeText(LoginActivity.this,"Something is wrong with your Email",Toast.LENGTH_LONG);
-                                   Log.d("Register Activity","Invalid Email //Malformed");
-                               }
-                               catch (FirebaseAuthUserCollisionException existEmail)
-                               {
-                                   Toast.makeText(LoginActivity.this,"Email already Exist",Toast.LENGTH_LONG);
-                                   Log.d("Register Activity","Email already exist");
-                               }
-                               catch (Exception e)
-                               {
-                                   Log.e("Register Activity", "something wrong" + e.getMessage());
-                               }
-                           }
+                            if (!task.isSuccessful())
+                            {
+                                try {
+                                    throw task.getException();
+                                }
+                                // if user enters wrong email.
+                                catch (FirebaseAuthInvalidUserException invalidEmail) {
+                                    Toast.makeText(LoginActivity.this,"Email does not Exist",Toast.LENGTH_LONG);
+                                    Log.d(TAG, "onComplete: invalid_email");
+
+                                    // TODO: take your actions!
+                                }
+                                // if user enters wrong password.
+                                catch (FirebaseAuthInvalidCredentialsException wrongPassword) {
+                                    Toast.makeText(LoginActivity.this,"Wrong Password",Toast.LENGTH_LONG);
+                                    Log.d(TAG, "onComplete: wrong_password");
+
+                                    // TODO: Take your action
+                                } catch (Exception e) {
+                                    Toast.makeText(LoginActivity.this,"Something broke on our end. Sorry for the trouble",Toast.LENGTH_LONG);
+                                    Log.d(TAG, "onComplete: " + e.getMessage());
+                                }
+                            }
+                            if(task.isSuccessful())
+                            {
+                                Toast.makeText(LoginActivity.this,"You have logged in!!",Toast.LENGTH_LONG);
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            }
                         }
                     });
                 }
