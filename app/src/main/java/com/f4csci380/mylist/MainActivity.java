@@ -1,6 +1,7 @@
 package com.f4csci380.mylist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -10,11 +11,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
+    public static final String TAG = "MainActivity";
+
     ArrayList<Memo> memos;
     RecyclerView memoList;
     MemoAdapter memoAdapter;
     Button addMemo;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,7 +26,17 @@ public class MainActivity extends AppCompatActivity
 
         memoList = findViewById(R.id.memoList);
         addMemo = findViewById(R.id.addMemo);
+
+        //Initalize memos with empty arraylist
+        memos = new ArrayList<>();
         memoAdapter = new MemoAdapter(this,memos);
+        memos.add(new Memo("coos","wasbruh"));
+        memos.add(new Memo("coockies","wasgodbruh"));
+        memos.add(new Memo("YUURRRRR WE OUT HERE","wasgoodbruh"));
+
+        //set layoutManager and adapter to RecyclerView
+        memoList.setLayoutManager(new LinearLayoutManager(this));
         memoList.setAdapter(memoAdapter);
+
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
 {
+    public static final String TAG = "MemoAdapter";
     private Context context;
     private ArrayList<Memo> memo;
 
@@ -36,6 +37,8 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull MemoAdapter.ViewHolder holder, int position)
     {
+        if(memo.size() == 0)
+        {}
         holder.listitem.setText(memo.get(position).getTitle());
         /*holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
