@@ -2,8 +2,11 @@ package com.f4csci380.mylist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
+import com.google.gson.Gson;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,7 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
+import static com.f4csci380.mylist.MainActivity.memoAdapter;
 import static com.f4csci380.mylist.MainActivity.memos;
 
 public class ComposeActivity extends AppCompatActivity {
@@ -49,7 +54,7 @@ public class ComposeActivity extends AppCompatActivity {
             {
                 memos.get(memoID).setTitle(title.getText().toString());
                 memos.get(memoID).setBody(body.getText().toString());
-                MainActivity.memoAdapter.notifyDataSetChanged();
+                memoAdapter.notifyDataSetChanged();
             }
         });
 

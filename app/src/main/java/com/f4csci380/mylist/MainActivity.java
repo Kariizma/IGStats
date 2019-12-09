@@ -5,11 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -20,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     RecyclerView memoList;
     static MemoAdapter memoAdapter;
     Button addMemo;
+    Button saveMemoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,13 +37,11 @@ public class MainActivity extends AppCompatActivity
 
         memoList = findViewById(R.id.memoList);
         addMemo = findViewById(R.id.addMemo);
+        saveMemoList = findViewById(R.id.saveMemoList);
 
         //Initalize memos with empty arraylist
-        memos = new ArrayList<>();
+        loadData();
         memoAdapter = new MemoAdapter(this,memos);
-        memos.add(new Memo("coos","wasbruh"));
-        memos.add(new Memo("coockies","wasgodbruh"));
-        memos.add(new Memo("YUURRRRR WE OUT HERE","wasgoodbruh"));
 
         //set layoutManager and adapter to RecyclerView
         memoList.setLayoutManager(new LinearLayoutManager(this));
@@ -67,5 +73,31 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        saveMemoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(memos);
+                editor.putString("tasklist",json);
+                editor.apply();
+            }
+        });
+    }
+
+    private void loadData()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("tasklist",null);
+        Type type = new TypeToken<ArrayList<Memo>>() {}.getType();
+        memos = gson.fromJson(json,type);
+
+        if(memos == null)
+        {
+            memos = new ArrayList<>();
+        }
     }
 }

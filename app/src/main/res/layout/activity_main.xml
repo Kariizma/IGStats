@@ -18,8 +18,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memoList"
         android:layout_width="409dp"
-        android:layout_height="674dp"
+        android:layout_height="625dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveMemoList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="Save List"
+        app:layout_constraintBottom_toTopOf="@+id/addMemo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
