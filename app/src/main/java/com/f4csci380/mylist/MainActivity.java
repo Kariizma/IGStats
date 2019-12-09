@@ -1,9 +1,11 @@
 package com.f4csci380.mylist;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +17,9 @@ public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = "MainActivity";
 
-    ArrayList<Memo> memos;
+    static ArrayList<Memo> memos;
     RecyclerView memoList;
-    MemoAdapter memoAdapter;
+    static MemoAdapter memoAdapter;
     Button addMemo;
 
     @Override
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity
         memoList.setLayoutManager(new LinearLayoutManager(this));
         memoList.setAdapter(memoAdapter);
 
+        addMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                memos.add(new Memo("New Memo", "New Memo"));
+                memoAdapter.notifyDataSetChanged();
+
+            }
+        });
+
         memoAdapter.setOnItemClickListner(new MemoAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v)
@@ -50,8 +61,10 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onItemLongClick(int position, View v) {
-
+            public void onItemLongClick(int position, View v)
+            {
+                memos.remove(position);
+                memoAdapter.notifyDataSetChanged();
             }
         });
 
