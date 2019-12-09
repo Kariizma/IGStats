@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -37,6 +39,21 @@ public class MainActivity extends AppCompatActivity
         //set layoutManager and adapter to RecyclerView
         memoList.setLayoutManager(new LinearLayoutManager(this));
         memoList.setAdapter(memoAdapter);
+
+        memoAdapter.setOnItemClickListner(new MemoAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v)
+            {
+                Intent intent = new Intent(getApplicationContext(),ComposeActivity.class);
+                intent.putExtra("MemoID",position);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+
+            }
+        });
 
     }
 }

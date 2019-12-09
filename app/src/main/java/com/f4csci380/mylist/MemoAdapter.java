@@ -1,6 +1,7 @@
 package com.f4csci380.mylist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
     public static final String TAG = "MemoAdapter";
     private Context context;
     private ArrayList<Memo> memo;
+    private static ClickListener clickListener;
 
     public MemoAdapter(Context context, ArrayList<Memo> memo)
     {
@@ -40,13 +42,6 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
         if(memo.size() == 0)
         {}
         holder.listitem.setText(memo.get(position).getTitle());
-        /*holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                TODO: open composeactivity to edit the text of this memo
-            }
-        });*/
     }
 
     @Override
@@ -54,7 +49,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
         return memo.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         private TextView listitem;
         private LinearLayout linearLayout;
@@ -64,6 +59,32 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
             super(itemView);
             listitem = itemView.findViewById(R.id.listItem);
             linearLayout = itemView.findViewById(R.id.LL);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
+
+        @Override
+        public void onClick(View v)
+        {
+            clickListener.onItemClick(getAdapterPosition(),v);
+        }
+
+        @Override
+        public boolean onLongClick(View v)
+        {
+            clickListener.onItemLongClick(getAdapterPosition(),v);
+            return false;
+        }
+    }
+
+    public void setOnItemClickListner(ClickListener clickListner)
+    {
+        MemoAdapter.clickListener = clickListner;
+    }
+
+    public interface ClickListener
+    {
+        void onItemClick(int position,View v);
+        void onItemLongClick(int position, View v);
     }
 }
